@@ -327,7 +327,7 @@ a { color: var(--accent); text-decoration: none; }
   position: fixed;
   top: 74px;
   right: 24px;
-  width: 130px;
+  width: 180px;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--border);
