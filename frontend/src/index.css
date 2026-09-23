@@ -323,11 +323,11 @@ a { color: var(--accent); text-decoration: none; }
   padding: 28px 24px 80px;
 }
 
-.p{
+.proctor-monitor{
   position: fixed;
   top: 74px;
   right: 24px;
-  width: 180px;
+  width: 130px;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--border);
