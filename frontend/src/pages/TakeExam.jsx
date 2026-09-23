@@ -12,6 +12,7 @@ export default function TakeExam() {
   const [questions, setQuestions] = useState([]);
   const [submission, setSubmission] = useState(null);
   const [answers, setAnswers] = useState({});
+  const [currentQ, setCurrentQ] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [toast, setToast] = useState('');
@@ -279,51 +280,83 @@ useEffect(() => {
         <div className="exam-timer">{formatTime(timeLeft)}</div>
       </div>
 
-      {questions.map((q, i) => (
-        <div className="question-block" key={q._id}>
-          <div className="question-number">Question {i + 1} · {q.marks} mark(s)</div>
-          <p style={{ color: 'var(--text)', fontSize: '1rem', marginBottom: 14 }}>{q.questionText}</p>
+  {questions.length > 0 && (() => {
+  const q = questions[currentQ];
+  return (
+    <div className="question-block" key={q._id}>
+      <div className="question-number">Question {currentQ + 1} of {questions.length} · {q.marks} mark(s)</div>
+      <p style={{ color: 'var(--text)', fontSize: '1rem', marginBottom: 14 }}>{q.questionText}</p>
 
-          {q.questionType === 'short-answer' ? (
-            <textarea
-              rows={3}
-              value={answers[q._id] || ''}
-              onChange={(e) => handleAnswerChange(q._id, e.target.value)}
-              placeholder="Type your answer..."
+      {q.questionType === 'short-answer' ? (
+        <textarea
+          rows={3}
+          value={answers[q._id] || ''}
+          onChange={(e) => handleAnswerChange(q._id, e.target.value)}
+          placeholder="Type your answer..."
+        />
+      ) : q.questionType === 'true-false' ? (
+        ['True', 'False'].map((opt) => (
+          <label
+            key={opt}
+            className={`option-row ${answers[q._id] === opt ? 'selected' : ''}`}
+          >
+            <input
+              type="radio"
+              name={q._id}
+              checked={answers[q._id] === opt}
+              onChange={() => handleAnswerChange(q._id, opt)}
             />
-          ) : q.questionType === 'true-false' ? (
-            ['True', 'False'].map((opt) => (
-              <label
-                key={opt}
-                className={`option-row ${answers[q._id] === opt ? 'selected' : ''}`}
-              >
-                <input
-                  type="radio"
-                  name={q._id}
-                  checked={answers[q._id] === opt}
-                  onChange={() => handleAnswerChange(q._id, opt)}
-                />
-                {opt}
-              </label>
-            ))
-          ) : (
-            q.options?.map((opt, oi) => (
-              <label
-                key={oi}
-                className={`option-row ${answers[q._id] === opt ? 'selected' : ''}`}
-              >
-                <input
-                  type="radio"
-                  name={q._id}
-                  checked={answers[q._id] === opt}
-                  onChange={() => handleAnswerChange(q._id, opt)}
-                />
-                {opt}
-              </label>
-            ))
-          )}
-        </div>
-      ))}
+            {opt}
+          </label>
+        ))
+      ) : (
+        q.options?.map((opt, oi) => (
+          <label
+            key={oi}
+            className={`option-row ${answers[q._id] === opt ? 'selected' : ''}`}
+          >
+            <input
+              type="radio"
+              name={q._id}
+              checked={answers[q._id] === opt}
+              onChange={() => handleAnswerChange(q._id, opt)}
+            />
+            {opt}
+          </label>
+        ))
+      )}
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          disabled={currentQ === 0}
+          onClick={() => setCurrentQ((c) => c - 1)}
+        >
+          Previous
+        </button>
+
+        {currentQ < questions.length - 1 ? (
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => setCurrentQ((c) => c + 1)}
+          >
+            Next
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleSubmit}
+          >
+            Submit exam
+          </button>
+        )}
+      </div>
+    </div>
+  );
+})()}
 
       <button className="btn btn-primary btn-block" onClick={handleSubmit}>
         Submit exam
