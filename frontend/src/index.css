@@ -352,13 +352,13 @@ a { color: var(--accent); text-decoration: none; }
 
 @media (max-width: 640px) {
   .proctor-monitor {
-    width: 100px;
+    width: 150px;
     top: 12px;
     right: 12px;
   }
   .proctor-monitor-label {
-    font-size: 0.55rem;
-    padding: 2px 5px;
+    font-size: 0.6rem;
+    padding: 3px 6px;
   }
   .exam-taking-shell {
     padding-top: 130px;
