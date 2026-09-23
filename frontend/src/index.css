@@ -323,7 +323,7 @@ a { color: var(--accent); text-decoration: none; }
   padding: 28px 24px 80px;
 }
 
-.proctor-monitor {
+.p{
   position: fixed;
   top: 74px;
   right: 24px;
@@ -348,6 +348,21 @@ a { color: var(--accent); text-decoration: none; }
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+@media (max-width: 640px) {
+  .proctor-monitor {
+    width: 100px;
+    top: 12px;
+    right: 12px;
+  }
+  .proctor-monitor-label {
+    font-size: 0.55rem;
+    padding: 2px 5px;
+  }
+  .exam-taking-shell {
+    padding-top: 130px;
+  }
 }
 .rec-dot {
   width: 6px; height: 6px; border-radius: 50%;
