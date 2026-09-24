@@ -18,6 +18,11 @@ export default function Navbar() {
       </Link>
       {user && (
         <div className="navbar-right">
+          {user.role === 'student' && (
+            <Link to="/my-exams" className="btn btn-ghost">
+              My Exams
+            </Link>
+          )}
           <span className="navbar-user">
             {user.name} <span className="role-badge">{user.role}</span>
           </span>

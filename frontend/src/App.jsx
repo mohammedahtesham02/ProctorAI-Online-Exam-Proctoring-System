@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import CreateExam from './pages/CreateExam';
 import ManageExam from './pages/ManageExam';
 import ExamResults from './pages/ExamResults';
+import MyExams from './pages/MyExams';
 import TakeExam from './pages/TakeExam';
 
 function Home() {
@@ -32,6 +33,14 @@ function AppRoutes() {
               <Dashboard />
             </ProtectedRoute>
           }
+        />
+        <Route
+        path="/my-exams"
+        element={
+        <ProtectedRoute allowedRoles={['student']}>
+        <MyExams />
+        </ProtectedRoute>
+        }
         />
         <Route
           path="/exams/create"

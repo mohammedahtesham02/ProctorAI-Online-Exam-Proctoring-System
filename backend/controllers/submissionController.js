@@ -151,3 +151,17 @@ exports.getSubmissionById = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// @route  GET /api/submissions/my
+// @access Private (student)
+exports.getMySubmissions = async (req, res) => {
+  try {
+    const submissions = await Submission.find({ student: req.user._id })
+      .populate('exam', 'title subject totalMarks')
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ success: true, count: submissions.length, submissions });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
