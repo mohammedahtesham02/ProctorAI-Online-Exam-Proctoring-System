@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -12,10 +13,6 @@ import ExamResults from './pages/ExamResults';
 import MyExams from './pages/MyExams';
 import TakeExam from './pages/TakeExam';
 
-function Home() {
-  const { user } = useAuth();
-  return <Navigate to={user ? '/dashboard' : '/login'} replace />;
-}
 
 function AppRoutes() {
   return (
