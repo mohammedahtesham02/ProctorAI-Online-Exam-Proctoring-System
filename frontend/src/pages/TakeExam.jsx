@@ -20,6 +20,7 @@ export default function TakeExam() {
   const [submitted, setSubmitted] = useState(false);
   const [result, setResult] = useState(null);
   const [started, setStarted] = useState(false);
+  const [violationCount, setViolationCount] = useState(0);
 
   const violationCountRef = useRef(0);
   const submissionIdRef = useRef(null);
@@ -87,6 +88,7 @@ export default function TakeExam() {
         });
         violationCountRef.current = data.violationCount;
         showToast(`Violation detected: ${violationType.replace(/-/g, ' ')} (${data.violationCount})`);
+        setViolationCount(data.violationCount);
 
        if (data.autoSubmitted) {
          submittedRef.current = true;
@@ -278,7 +280,22 @@ useEffect(() => {
       <div className="page-header" style={{ alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>{exam?.title}</h2>
         <div className="exam-timer">{formatTime(timeLeft)}</div>
-      </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div
+        title="Violations detected"
+        style={{
+        padding: '4px 10px',
+        borderRadius: 12,
+        fontSize: '0.85rem',
+        background: violationCount === 0 ? '#1f3d2b' : '#4a1f1f',
+        color: violationCount === 0 ? '#7ddc9b' : '#ff8080',
+      }}
+  >
+       ⚠ {violationCount} / {exam?.proctoringSettings?.tabSwitchLimit ?? 3}
+       </div>
+       <div className="exam-timer">{formatTime(timeLeft)}</div>
+       </div>
+       </div>
 
   {questions.length > 0 && (() => {
   const q = questions[currentQ];
